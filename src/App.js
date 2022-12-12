@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import CanvasComponent from "./components/CanvasComponent";
+import Slider from "./components/Slider";
+import ArtistPalette from "./assets/emojis/artist-palette.png";
+import "./App.css";
 
 function App() {
+  const [isLoaded, setLoaded] = useState(false);
+  const [offset] = useState({
+    x: 2,
+    noiseX: 0,
+    noiseDirection: 1,
+    isMoving: 0,
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Slider offset={offset} />
+      <CanvasComponent
+        offset={offset}
+        isLoaded={isLoaded}
+        setLoaded={setLoaded}
+      />
+      <div className={`loader-container ${isLoaded ? "loaded" : ""}`}>
+        <h2>Gallery Image</h2>
+        <img src={ArtistPalette} alt="artist-palette" />
+      </div>
     </div>
   );
 }
